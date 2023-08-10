@@ -1,121 +1,474 @@
-import { CForm, CFormLabel, CFormInput, CFormCheck, CButton,CCard,CCardBody,CCardHeader,CCol,CFormTextarea,CFormSelect} from '@coreui/react'
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import React, { useState } from 'react';
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import TextField from '@mui/material/TextField';
-import { DocsExample } from 'src/components'
-import { alignProperty } from '@mui/material/styles/cssUtils';
-import { TagsInput } from "react-tag-input-component";
-
-
-const Analyzer = () => {
-
-    const [expanded, setExpanded] = React.useState(false);
-    const [selected, setSelected] = useState([]);
-
-    const handleChange = (panel) => (event, isExpanded) => {
-      setExpanded(isExpanded ? panel : false);
-    };
+import { CForm, CTableHead, CTableRow, CTableHeaderCell, 
+  CButton,CCard,CCardBody,CCardHeader,CCol,CFormSelect,
+  CTableBody,CTableDataCell,CAvatar,CProgress,CTable,CRow, CModal,
+  CModalHeader, CModalTitle, CModalBody, CModalFooter,CFormInput} from '@coreui/react'
+  import CIcon from '@coreui/icons-react'
+  import Accordion from '@mui/material/Accordion';
+  import AccordionDetails from '@mui/material/AccordionDetails';
+  import AccordionSummary from '@mui/material/AccordionSummary';
+  import Typography from '@mui/material/Typography';
+  import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+  import React, {useEffect,useState } from 'react';
+  import Box from "@mui/material/Box";
+  import Container from "@mui/material/Container";
+  import TextField from '@mui/material/TextField';
+  import { DocsExample } from 'src/components'
+  import { alignProperty } from '@mui/material/styles/cssUtils';
+  import { TagsInput } from "react-tag-input-component";
+import LinearProgress from '@mui/material/LinearProgress';
+  import {
+    cilLibraryAdd,
+    cibCcApplePay,
+    cibCcMastercard,
+    cibCcPaypal,
+    cibCcStripe,
+    cibCcVisa,
+    cibGoogle,
+    cibFacebook,
+    cibLinkedin,
+    cifBr,
+    cifEs,
+    cifFr,
+    cifIn,
+    cifPl,
+    cifUs,
+    cibTwitter,
+    cilUser,
+    cilPeople,
+    cilSave,
+    cilUserFemale,
+    cilSearch,
+  } from '@coreui/icons'
+  import avatar1 from 'src/assets/images/avatars/1.jpg'
+  import avatar2 from 'src/assets/images/avatars/2.jpg'
+  import avatar3 from 'src/assets/images/avatars/3.jpg'
+  import avatar4 from 'src/assets/images/avatars/4.jpg'
+  import avatar5 from 'src/assets/images/avatars/5.jpg'
+  import avatar6 from 'src/assets/images/avatars/6.jpg'
 
   
-  return (    
-    <div>
-
-<CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Tell about Your Product</strong>
-          </CCardHeader>
-          <CCardBody>
-          
-              <CForm>
-                <div className="mb-3">
-                 <CFormSelect 
-                    aria-label="Default select example"
-                    options={['Choose Your Category',
-                    { label: 'Technology and Electronics', value: '1' },
-                   { label: 'Fashion and Apparel', value: '2' },
-                    { label: 'Health and Wellness', value: '3' },
-                    { label: 'Personal Development and Education', value: '4' },
-                    { label: 'Hospitality and Food Services', value: '5' }
-                      ]}
-                     />
-                </div>
-                <div className="mb-3">
-                <div>
-
-                 {/* <pre>{JSON.stringify(selected)}</pre> */}
-
-                   <TagsInput
-                      value={selected}
-                    onChange={setSelected}
-                    name="keywords"
-                       placeHolder="Enter Keywords"
-                   />
-                   <em>press enter to add new tag</em>
-    </div>
-                </div>
-                <div className="mb-3">
-                <CButton color="success" size="lg" >Satrt Analyzing</CButton>
-                </div>
-              </CForm>
+  import {CCardImage,CCardTitle,CCardText} from '@coreui/react'
   
-          </CCardBody>
-        </CCard>
-      </CCol>
-
-
-  <div>
-      <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1bh-content"
-          id="panel1bh-header"
-        >
-          <Typography sx={{ width: '33%', flexShrink: 0 }}>
-            General settings
-          </Typography>
-          <Typography sx={{ color: 'text.secondary' }}>I am an accordion</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
-            Aliquam eget maximus est, id dignissim quam.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-   
-    </div>
-
-     {/* <Container component="main" maxWidth="sm">
-      <Box
-        sx={{
-          boxShadow: 3,
-          borderRadius: 2,
-          px: 4,
-          py: 6,
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          bgcolor:"#46546C"
-        }}
-      >
-       
-      </Box>
-    </Container> */}
+  
+  const Analyzer = () => {
 
     
+
+    let[fetcheddata,setData] = useState([])
+
+  
+      const [expanded, setExpanded] = React.useState(false);
+      const [selected, setSelected] = useState([]);
+      
+  
+      const handleChange = (panel) => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
+      };
+  
+  
+      const tableavatar = [ avatar1,avatar2,avatar3 ,avatar4 ,avatar5 ,avatar6]
+   
+    
+      const progressGroupExample1 = [
+        { title: 'Monday', value1: 34, value2: 50 },
+        { title: 'Tuesday', value1: 56, value2: 94 },
+        { title: 'Wednesday', value1: 12, value2: 67 },
+        { title: 'Thursday', value1: 43, value2: 91 },
+        { title: 'Friday', value1: 22, value2: 73 },
+        { title: 'Saturday', value1: 53, value2: 82 },
+        { title: 'Sunday', value1: 9, value2: 69 },
+      ]
+  
+      const progressGroupExample2 = [
+        { title: 'Male', icon: cilUser, value: 53 },
+        { title: 'Female', icon: cilUserFemale, value: 43 },
+      ]
+    
+      const progressGroupExample3 = [
+        { title: 'Organic Search', icon: cibGoogle, percent: 56, value: '191,235' },
+        { title: 'Facebook', icon: cibFacebook, percent: 15, value: '51,223' },
+        { title: 'Twitter', icon: cibTwitter, percent: 11, value: '37,564' },
+        { title: 'LinkedIn', icon: cibLinkedin, percent: 8, value: '27,319' },
+      ]
+    
+
+      const[category,setCategory] = useState("")
+      const[keywords,setKeywords] = useState([])
+      let[influencers,setInfluencersData] = useState([])
+
+      useEffect(() => {
+        console.log("Updated influencers:", influencers);
+      }, [influencers]);
+
+      const [isLoading, setIsLoading] = useState(false);
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+        console.log(category)
+        console.log(keywords)
+    
+        const productData = {
+          "hash_tags":keywords,
+          "category":category
+        };
+        
+        fetch('http://127.0.0.1:5000/influencer', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(productData)
+        })
+          .then(response => response.json())
+          .then(data => {
+            setInfluencersData(data);
+            console.log(data);
+            console.log("hello");
+            console.log(influencers);
+            setIsLoading(false);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+            setIsLoading(false);
+          });
+
+       
+        
+      };
+
+      const [visible, setVisible] = useState(false)  
+      const[campaignName,setCampaignName] = useState("")
+
+      const saveCampaign = () => {
+        
+        const campaignData = {
+          "campaignName": campaignName,
+          "category": category,
+          "campaignKeywords": keywords,
+          "influencers": influencers
+        };
+        
+        fetch('http://localhost:5000/campaign/add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(campaignData)
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+          setVisible(false)
+         
+      };
+  
+    
+    return (    
+      <div>
+  
+      
+  <CCol xs={12}>
+          <CCard className="mb-4">
+            <CCardHeader>
+              <strong>Tell about Your Product</strong>
+            </CCardHeader>
+            <CCardBody>
+            
+                <CForm onSubmit={handleSubmit}> 
+                  <div className="mb-3">
+                   <CFormSelect onChange={(e)=>{setCategory(e.target.value);}}
+                      aria-label="Default select example"
+                      options={['Choose Your Category',
+                      { label: 'Technology and Electronics', value: 'Technology and Electronics' },
+                     { label: 'Fashion and Apparel', value: 'Fashion and Apparel' },
+                      { label: 'Health and Wellness', value: 'Health and Wellness' },
+                      { label: 'Personal Developmyent and Education', value: 'Personal Development and Education' },
+                      { label: 'Hospitality and Food Services', value: 'Hospitality and Food Services' }
+                        ]}
+                       />
+                  </div>
+                  <div className="mb-3">
+                  <div>
+  
+                   {/* <pre>{JSON.stringify(selected)}</pre> */}
+  
+                     <TagsInput
+                        value={keywords}
+                      onChange={setKeywords}
+                      name="keywords"
+                         placeHolder="Enter Keywords"
+                     />
+                     <em>press enter to add new tag</em>
+      </div>                                 
+                  </div>
+
+                  <div className="d-grid gap-2 col-3 mx-auto">
+                    <CButton color="success" type='submit'>Analyze <CIcon icon={cilSearch} size="md"/></CButton>
+                  </div>
+                        
+                </CForm>
+            
+            </CCardBody>
+           
+            {isLoading && (
+        <Box sx={{ width: '100%' }}>
+        <LinearProgress />
+          </Box>
+      )}
+
+          </CCard>
+        </CCol>
+
      
+  
+  <br/>
 
+  <CCol xs={12}>
+  <CCard className="mb-4">
+            <CCardHeader>
+            {/* <CButton color="primary"   >Save <CIcon icon={cilSave} size="md"/></CButton> */}
+            <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+              <CButton color="primary" className="me-md-2" onClick={() => setVisible(!visible)}><CIcon icon={cilSave} size="md"/> Save</CButton>
+                 </div>
+            </CCardHeader>
+            
+            <CCardBody>
+  
+  
+      <CTable align="middle" className="mb-0 border" hover responsive>
+                  <CTableHead color="light">
+                    <CTableRow>
+                      <CTableHeaderCell className="text-center">
+                        <CIcon icon={cilPeople} />
+                      </CTableHeaderCell>
+                      <CTableHeaderCell>Influencer Name</CTableHeaderCell>
+                      <CTableHeaderCell className="text-center">Social Media Platform</CTableHeaderCell>
+                      <CTableHeaderCell>Followers/Sub count</CTableHeaderCell>
+                      <CTableHeaderCell className="text-center">Category</CTableHeaderCell>
+                      <CTableHeaderCell>Review Score</CTableHeaderCell>
+                    </CTableRow>
+                  </CTableHead>
+                  <CTableBody>   
+                    {influencers.map((item, index) => (
+                      <CTableRow v-for="item in tableItems" key={index}>
+                        <CTableDataCell className="text-center">
+                        
+                           <CAvatar size="md" src={"de"}  /> 
+                            
+                         
+                        </CTableDataCell>
+                        <CTableDataCell>
+                          <div> <strong>{item['Influencer Name']}</strong></div>
+                          {/* <div className="small text-medium-emphasis">
+                            <span>{item.user.new ? 'New' : 'Recurring'}</span> | Registered:{' '}
+                            {item.user.registered}
+                          </div> */}
+                        </CTableDataCell>
+                        <CTableDataCell className="text-center">
+                        <div>{item['Social Media Platform']}</div>
+                        </CTableDataCell>
+                        <CTableDataCell>
+                          <div className="clearfix">
+                            <div className="float-start">
+                                 {item['Followers Count']}
+                            </div>
+                            <div className="float-end">
+                              {/* <small className="text-medium-emphasis">{item.usage.period}</small> */}
+                            </div>
+                          </div>
+                          {/* <CProgress thin color={item.usage.color} value={item.usage.value} /> */}
+                        </CTableDataCell>
+                        <CTableDataCell className="text-center">
+                        <div>{item['category']}</div>
+                        </CTableDataCell>
+                        <CTableDataCell>
+                          {/* <div className="small text-medium-emphasis">Last login</div> */}
+                         {item['review_score']}
+                        </CTableDataCell>
+                      </CTableRow>
+                    ))}
+                  </CTableBody>
+                </CTable>
+  <br/>
+                <CRow>
+                  <CCol xs={12} md={6} xl={6}>
+                    <CRow>
+                      <CCol sm={6}>
+                        <div className="border-start border-start-4 border-start-info py-1 px-3">
+                          <div className="text-medium-emphasis small">New Clients</div>
+                          <div className="fs-5 fw-semibold">9,123</div>
+                        </div>
+                      </CCol>
+                      <CCol sm={6}>
+                        <div className="border-start border-start-4 border-start-danger py-1 px-3 mb-3">
+                          <div className="text-medium-emphasis small">Recurring Clients</div>
+                          <div className="fs-5 fw-semibold">22,643</div>
+                        </div>
+                      </CCol>
+                    </CRow>
+  
+                    <hr className="mt-0" />
+                    {progressGroupExample1.map((item, index) => (
+                      <div className="progress-group mb-4" key={index}>
+                        <div className="progress-group-prepend">
+                          <span className="text-medium-emphasis small">{item.title}</span>
+                        </div>
+                        <div className="progress-group-bars">
+                          <CProgress thin color="info" value={item.value1} />
+                          <CProgress thin color="danger" value={item.value2} />
+                        </div>
+                      </div>
+                    ))}
+                  </CCol>
+  
+                  <CCol xs={12} md={6} xl={6}>
+                    <CRow>
+                      <CCol sm={6}>
+                        <div className="border-start border-start-4 border-start-warning py-1 px-3 mb-3">
+                          <div className="text-medium-emphasis small">Pageviews</div>
+                          <div className="fs-5 fw-semibold">78,623</div>
+                        </div>
+                      </CCol>
+                      <CCol sm={6}>
+                        <div className="border-start border-start-4 border-start-success py-1 px-3 mb-3">
+                          <div className="text-medium-emphasis small">Organic</div>
+                          <div className="fs-5 fw-semibold">49,123</div>
+                        </div>
+                      </CCol>
+                    </CRow>
+  
+                    <hr className="mt-0" />
+  
+                    {progressGroupExample2.map((item, index) => (
+                      <div className="progress-group mb-4" key={index}>
+                        <div className="progress-group-header">
+                          <CIcon className="me-2" icon={item.icon} size="lg" />
+                          <span>{item.title}</span>
+                          <span className="ms-auto fw-semibold">{item.value}%</span>
+                        </div>
+                        <div className="progress-group-bars">
+                          <CProgress thin color="warning" value={item.value} />
+                        </div>
+                      </div>
+                    ))}
+  
+                    <div className="mb-5"></div>
+  
+                    {progressGroupExample3.map((item, index) => (
+                      <div className="progress-group" key={index}>
+                        <div className="progress-group-header">
+                          <CIcon className="me-2" icon={item.icon} size="lg" />
+                          <span>{item.title}</span>
+                          <span className="ms-auto fw-semibold">
+                            {item.value}{' '}
+                            <span className="text-medium-emphasis small">({item.percent}%)</span>
+                          </span>
+                        </div>
+                        <div className="progress-group-bars">
+                          <CProgress thin color="success" value={item.percent} />
+                        </div>
+                      </div>
+                    ))}
+                  </CCol>
+                </CRow>
+  
+                </CCardBody>
+          </CCard>
+        </CCol>
+  
 
-    </div>
-  )
-}
-
-export default Analyzer
+        <>
+    <CModal alignment="center" visible={visible} onClose={() => setVisible(false)}>
+      <CModalHeader>
+        <CModalTitle>  <CIcon icon={cilLibraryAdd} size="lg"/> Campaign Name</CModalTitle>
+      </CModalHeader>
+      <CModalBody>
+      <CFormInput type="text" placeholder="Enter Name" aria-label="default input example" onChange={
+        (e)=>{setCampaignName(e.target.value);}}/>
+      </CModalBody>
+      <CModalFooter>
+        <CButton color="secondary" onClick={() => setVisible(false)}>
+          Close
+        </CButton>
+        <CButton color="primary" onClick={saveCampaign}>Create</CButton>
+      </CModalFooter>
+    </CModal>
+  </>
+                
+       {/* <Container component="main" maxWidth="sm">
+        <Box
+          sx={{
+            boxShadow: 3,
+            borderRadius: 2,
+            px: 4,
+            py: 6,
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            bgcolor:"#46546C"
+          }}
+        >
+         
+        </Box>
+      </Container> */}
+  
+  
+  {/* <>
+        <Swiper
+          effect={'coverflow'}
+          grabCursor={true}
+          centeredSlides={true}
+          slidesPerView={'auto'}
+          coverflowEffect={{
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: true,
+          }}
+          pagination={true}
+          modules={[EffectCoverflow, Pagination]}
+          className="mySwiper"
+        >
+          <SwiperSlide>
+          <CCard style={{ width: '18rem' }}>
+    <CCardImage orientation="top"  src={"https://i.ibb.co/8z1nt7x/2.png"}/>
+    <CCardBody>
+      <CCardTitle>Card title</CCardTitle>
+      <CCardText>
+        Some quick example text to build on the card title and make up the bulk of the 
+      </CCardText>
+    </CCardBody>
+    <CCardBody>
+      <CCardLink href="#">Card link</CCardLink>
+      <CCardLink href="#">Another link</CCardLink>
+    </CCardBody>
+  </CCard>
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+          </SwiperSlide>
+       
+        </Swiper>
+      </> */}
+      
+       
+  
+  
+  
+  
+      </div>
+    )
+  }
+  
+  export default Analyzer
+  

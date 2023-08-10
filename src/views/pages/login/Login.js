@@ -53,7 +53,7 @@ export default function SignInSide() {
         navigate(`/dashboard`);
        }
        else{
-        console.log('mada');
+        console.log('fail');
        }
 
      })

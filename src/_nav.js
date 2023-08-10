@@ -49,27 +49,10 @@ const _nav = [
     icon: <CIcon icon={cilLibraryAdd} customClassName="nav-icon" />,
   },
   {
-    component: CNavGroup,
-    name: 'My Campaigns',
-    to: '/mycampaings',
+    component: CNavItem,
+    name: 'All Campaigns',
+    to: '/campaigns/mycampaigns',
     icon: <CIcon icon={cilBookmark} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'NIBM Campaigns',
-        to: '/campaigns/mycampaigns',
-      },
-      {
-        component: CNavItem,
-        name: 'Buttons groups',
-        to: '/buttons/button-groups',
-      },
-      {
-        component: CNavItem,
-        name: 'Dropdowns',
-        to: '/buttons/dropdowns',
-      },
-    ],
   },
 
 ]
