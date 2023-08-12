@@ -55,6 +55,10 @@ const CreateCampaings = React.lazy(() => import('./views/Campaigns/CreateCampaig
 const MyCampaings = React.lazy(() => import('./views/Campaigns/MyCampaigns'))
 const Analyzer = React.lazy(() => import('./views/Analyzer'))
 
+//Influencers
+const AddInfluencers = React.lazy(() => import('./views/Influencers/AddInfluencers'))
+const ViewInfluencers = React.lazy(() => import('./views/Influencers/ViewInfluencers'))
+
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
@@ -103,6 +107,8 @@ const routes = [
   { path: '/campaigns/createcampaigns', name: 'Create Campaings', element: CreateCampaings },
   { path: '/campaigns/mycampaigns', name: 'My Campaings', element: MyCampaings },
   { path: '/analyzer', name: 'Analyzer', element: Analyzer},
+  { path: 'influencers/addinfluencers', name: 'Add Influencers', element: AddInfluencers},
+  { path: 'influencers/viewinfluencers', name: 'View Influencers', element: ViewInfluencers},
 ]
 
 export default routes

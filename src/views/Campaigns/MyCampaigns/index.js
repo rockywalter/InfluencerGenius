@@ -34,7 +34,6 @@ import { CForm, CTableHead, CTableRow, CTableHeaderCell,
   import avatar4 from 'src/assets/images/avatars/4.jpg'
   import avatar5 from 'src/assets/images/avatars/5.jpg'
   import avatar6 from 'src/assets/images/avatars/6.jpg'
-import ShowCampaigns from '../ShowCampaigns';
 
 
 
