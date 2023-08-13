@@ -1,7 +1,9 @@
 import { CForm, CTableHead, CTableRow, CTableHeaderCell, 
   CButton,CCard,CCardBody,CCardHeader,CCol,CFormSelect,
-  CTableBody,CTableDataCell,CAvatar,CProgress,CTable,CRow, CModal,
+  CTableBody,CTableDataCell,CAvatar,CTable,CRow, CModal,
   CModalHeader, CModalTitle, CModalBody, CModalFooter,CFormInput} from '@coreui/react'
+  import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from '@mui/x-charts';
+  import { CChart } from '@coreui/react-chartjs'
   import CIcon from '@coreui/icons-react'
   import Accordion from '@mui/material/Accordion';
   import AccordionDetails from '@mui/material/AccordionDetails';
@@ -95,12 +97,16 @@ import LinearProgress from '@mui/material/LinearProgress';
       const[category,setCategory] = useState("")
       const[keywords,setKeywords] = useState([])
       let[influencers,setInfluencersData] = useState([])
+      const [influencerNames, setInfluencerNames] = useState([]);
+      const [influencerFollowers, setInfluencerFollowers] = useState([]);
+
 
       useEffect(() => {
         console.log("Updated influencers:", influencers);
       }, [influencers]);
 
       const [isLoading, setIsLoading] = useState(false);
+      const [isShowingResults, setIsShowingResults] = useState(false);
 
       const handleSubmit = (e) => {
         e.preventDefault();
@@ -126,14 +132,24 @@ import LinearProgress from '@mui/material/LinearProgress';
             console.log(data);
             console.log("hello");
             console.log(influencers);
+            const names = data.map(item => item["Influencer Name"]);
+          setInfluencerNames(names);
+          const followers = data.map(item => item["Followers Count"]);
+          setInfluencerFollowers(followers);
+
+         
             setIsLoading(false);
           })
           .catch(error => {
             console.error('Error fetching data:', error);
             setIsLoading(false);
+            setIsShowingResults(false)
           });
 
-       
+          
+
+
+          setIsShowingResults(true)
         
       };
 
@@ -187,7 +203,7 @@ import LinearProgress from '@mui/material/LinearProgress';
                       { label: 'Technology and Electronics', value: 'Technology and Electronics' },
                      { label: 'Fashion and Apparel', value: 'Fashion and Apparel' },
                       { label: 'Health and Wellness', value: 'Health and Wellness' },
-                      { label: 'Personal Developmyent and Education', value: 'Personal Development and Education' },
+                      { label: 'Personal Development and Education', value: 'Personal Development and Education' },
                       { label: 'Hospitality and Food Services', value: 'Hospitality and Food Services' }
                         ]}
                        />
@@ -228,158 +244,100 @@ import LinearProgress from '@mui/material/LinearProgress';
   
   <br/>
 
-  <CCol xs={12}>
-  <CCard className="mb-4">
-            <CCardHeader>
-            {/* <CButton color="primary"   >Save <CIcon icon={cilSave} size="md"/></CButton> */}
-            <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-              <CButton color="primary" className="me-md-2" onClick={() => setVisible(!visible)}><CIcon icon={cilSave} size="md"/> Save</CButton>
-                 </div>
-            </CCardHeader>
-            
-            <CCardBody>
-  
-  
-      <CTable align="middle" className="mb-0 border" hover responsive>
-                  <CTableHead color="light">
-                    <CTableRow>
-                      <CTableHeaderCell className="text-center">
-                        <CIcon icon={cilPeople} />
-                      </CTableHeaderCell>
-                      <CTableHeaderCell>Influencer Name</CTableHeaderCell>
-                      <CTableHeaderCell className="text-center">Social Media Platform</CTableHeaderCell>
-                      <CTableHeaderCell>Followers/Sub count</CTableHeaderCell>
-                      <CTableHeaderCell className="text-center">Category</CTableHeaderCell>
-                      <CTableHeaderCell>Review Score</CTableHeaderCell>
-                    </CTableRow>
-                  </CTableHead>
-                  <CTableBody>   
-                    {influencers.map((item, index) => (
-                      <CTableRow v-for="item in tableItems" key={index}>
-                        <CTableDataCell className="text-center">
-                        
-                           <CAvatar size="md" src={"de"}  /> 
-                            
-                         
-                        </CTableDataCell>
-                        <CTableDataCell>
-                          <div> <strong>{item['Influencer Name']}</strong></div>
-                          {/* <div className="small text-medium-emphasis">
-                            <span>{item.user.new ? 'New' : 'Recurring'}</span> | Registered:{' '}
-                            {item.user.registered}
-                          </div> */}
-                        </CTableDataCell>
-                        <CTableDataCell className="text-center">
-                        <div>{item['Social Media Platform']}</div>
-                        </CTableDataCell>
-                        <CTableDataCell>
-                          <div className="clearfix">
-                            <div className="float-start">
-                                 {item['Followers Count']}
-                            </div>
-                            <div className="float-end">
-                              {/* <small className="text-medium-emphasis">{item.usage.period}</small> */}
-                            </div>
+  {isShowingResults && (
+
+<CCol xs={12}>
+<CCard className="mb-4" >
+          <CCardHeader>
+          {/* <CButton color="primary"   >Save <CIcon icon={cilSave} size="md"/></CButton> */}
+          <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+            <CButton color="primary" className="me-md-2" onClick={() => setVisible(!visible)}><CIcon icon={cilSave} size="md"/> Save</CButton>
+               </div>
+          </CCardHeader>
+          
+          <CCardBody>
+
+
+    <CTable align="middle" className="mb-0 border" hover responsive>
+                <CTableHead color="light">
+                  <CTableRow>
+                    <CTableHeaderCell className="text-center">
+                      <CIcon icon={cilPeople} />
+                    </CTableHeaderCell>
+                    <CTableHeaderCell>Influencer Name</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Social Media Platform</CTableHeaderCell>
+                    <CTableHeaderCell>Followers/Sub count</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Category</CTableHeaderCell>
+                    <CTableHeaderCell>Review Score</CTableHeaderCell>
+                  </CTableRow>
+                </CTableHead>
+                <CTableBody>   
+                  {influencers.map((item, index) => (
+                    <CTableRow v-for="item in tableItems" key={index}>
+                      <CTableDataCell className="text-center">
+                      
+                         <CAvatar size="md" src={"de"}  /> 
+                          
+                       
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        <div> <strong>{item['Influencer Name']}</strong></div>
+                        {/* <div className="small text-medium-emphasis">
+                          <span>{item.user.new ? 'New' : 'Recurring'}</span> | Registered:{' '}
+                          {item.user.registered}
+                        </div> */}
+                      </CTableDataCell>
+                      <CTableDataCell className="text-center">
+                      <div>{item['Social Media Platform']}</div>
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        <div className="clearfix">
+                          <div className="float-start">
+                               {item['Followers Count']}
                           </div>
-                          {/* <CProgress thin color={item.usage.color} value={item.usage.value} /> */}
-                        </CTableDataCell>
-                        <CTableDataCell className="text-center">
-                        <div>{item['category']}</div>
-                        </CTableDataCell>
-                        <CTableDataCell>
-                          {/* <div className="small text-medium-emphasis">Last login</div> */}
-                         {item['review_score']}
-                        </CTableDataCell>
-                      </CTableRow>
-                    ))}
-                  </CTableBody>
-                </CTable>
-  <br/>
-                <CRow>
-                  <CCol xs={12} md={6} xl={6}>
-                    <CRow>
-                      <CCol sm={6}>
-                        <div className="border-start border-start-4 border-start-info py-1 px-3">
-                          <div className="text-medium-emphasis small">New Clients</div>
-                          <div className="fs-5 fw-semibold">9,123</div>
+                          <div className="float-end">
+                            {/* <small className="text-medium-emphasis">{item.usage.period}</small> */}
+                          </div>
                         </div>
-                      </CCol>
-                      <CCol sm={6}>
-                        <div className="border-start border-start-4 border-start-danger py-1 px-3 mb-3">
-                          <div className="text-medium-emphasis small">Recurring Clients</div>
-                          <div className="fs-5 fw-semibold">22,643</div>
-                        </div>
-                      </CCol>
-                    </CRow>
+                        {/* <CProgress thin color={item.usage.color} value={item.usage.value} /> */}
+                      </CTableDataCell>
+                      <CTableDataCell className="text-center">
+                      <div>{item['category']}</div>
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        {/* <div className="small text-medium-emphasis">Last login</div> */}
+                       {item['review_score']}
+                      </CTableDataCell>
+                    </CTableRow>
+                  ))}
+                </CTableBody>
+              </CTable>
+
+              <BarChart
+  xAxis={[
+    {
+      id: 'barCategories',
+      data: influencerNames,
+      scaleType: 'band',
+    },
+  ]}
+  series={[
+    {
+      data:[1,2,3,4,5,6,7,8,98,5,3]
+    },
+  ]}
+  width={1500}
+  height={300}
+/>
+
+
+              </CCardBody>
+        </CCard>
+      </CCol>
   
-                    <hr className="mt-0" />
-                    {progressGroupExample1.map((item, index) => (
-                      <div className="progress-group mb-4" key={index}>
-                        <div className="progress-group-prepend">
-                          <span className="text-medium-emphasis small">{item.title}</span>
-                        </div>
-                        <div className="progress-group-bars">
-                          <CProgress thin color="info" value={item.value1} />
-                          <CProgress thin color="danger" value={item.value2} />
-                        </div>
-                      </div>
-                    ))}
-                  </CCol>
-  
-                  <CCol xs={12} md={6} xl={6}>
-                    <CRow>
-                      <CCol sm={6}>
-                        <div className="border-start border-start-4 border-start-warning py-1 px-3 mb-3">
-                          <div className="text-medium-emphasis small">Pageviews</div>
-                          <div className="fs-5 fw-semibold">78,623</div>
-                        </div>
-                      </CCol>
-                      <CCol sm={6}>
-                        <div className="border-start border-start-4 border-start-success py-1 px-3 mb-3">
-                          <div className="text-medium-emphasis small">Organic</div>
-                          <div className="fs-5 fw-semibold">49,123</div>
-                        </div>
-                      </CCol>
-                    </CRow>
-  
-                    <hr className="mt-0" />
-  
-                    {progressGroupExample2.map((item, index) => (
-                      <div className="progress-group mb-4" key={index}>
-                        <div className="progress-group-header">
-                          <CIcon className="me-2" icon={item.icon} size="lg" />
-                          <span>{item.title}</span>
-                          <span className="ms-auto fw-semibold">{item.value}%</span>
-                        </div>
-                        <div className="progress-group-bars">
-                          <CProgress thin color="warning" value={item.value} />
-                        </div>
-                      </div>
-                    ))}
-  
-                    <div className="mb-5"></div>
-  
-                    {progressGroupExample3.map((item, index) => (
-                      <div className="progress-group" key={index}>
-                        <div className="progress-group-header">
-                          <CIcon className="me-2" icon={item.icon} size="lg" />
-                          <span>{item.title}</span>
-                          <span className="ms-auto fw-semibold">
-                            {item.value}{' '}
-                            <span className="text-medium-emphasis small">({item.percent}%)</span>
-                          </span>
-                        </div>
-                        <div className="progress-group-bars">
-                          <CProgress thin color="success" value={item.percent} />
-                        </div>
-                      </div>
-                    ))}
-                  </CCol>
-                </CRow>
-  
-                </CCardBody>
-          </CCard>
-        </CCol>
+  )}
+
+
   
 
         <>
