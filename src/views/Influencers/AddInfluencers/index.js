@@ -2,7 +2,7 @@ import React, { useEffect ,useState } from 'react';
 import { CNav, CNavItem, CNavLink, CTabContent, 
     CTabPane,CCard,CCardBody,CCardHeader,CCol,CSpinner,
     CTableBody,CTableDataCell,CAvatar,CProgress,CTable,CButtonGroup,CButton,
-    CModalHeader, CModalTitle, CModalBody, CFormInput  } from '@coreui/react'
+    CModalHeader, CFormTextarea, CForm , CFormInput  } from '@coreui/react'
     import * as XLSX from 'xlsx';
 
 const AddInfluencers = () => {
@@ -126,7 +126,7 @@ const AddInfluencers = () => {
 <CCol xs={12}>
   <CCard className="mb-4">
             <CCardHeader>
-     <strong>Update through a File!</strong>
+     <strong>File-Based Update</strong>
             </CCardHeader>
             <CCardBody>
   
@@ -155,11 +155,119 @@ const AddInfluencers = () => {
         <CCol xs={12}>
   <CCard className="mb-4">
             <CCardHeader>
-     <strong>Update through a File!</strong>
+     <strong>Form-based Update</strong>
             </CCardHeader>
             <CCardBody>
   
+            <CNav variant="tabs" role="tablist">
+      <CNavItem role="presentation">
+        <CNavLink
+          active={activeKey === 1}
+          component="button"
+          role="tab"
+          aria-controls="home-tab-pane"
+          aria-selected={activeKey === 1}
+          onClick={() => setActiveKey(1)}
+        >
+          Home
+        </CNavLink>
+      </CNavItem>
+      <CNavItem role="presentation">
+        <CNavLink
+          active={activeKey === 2}
+          component="button"
+          role="tab"
+          aria-controls="profile-tab-pane"
+          aria-selected={activeKey === 2}
+          onClick={() => setActiveKey(2)}
+        >
+          Profile
+        </CNavLink>
+      </CNavItem>
+      <CNavItem role="presentation">
+        <CNavLink
+          active={activeKey === 3}
+          component="button"
+          role="tab"
+          aria-controls="contact-tab-pane"
+          aria-selected={activeKey === 3}
+          onClick={() => setActiveKey(3)}
+        >
+          Contact
+        </CNavLink>
+      </CNavItem>
+      <CNavItem role="presentation">
+        <CNavLink
+          active={activeKey === 4}
+          component="button"
+          disabled
+          role="tab"
+          aria-controls="disabled-tab-pane"
+          aria-selected={activeKey === 4}
+          onClick={() => setActiveKey(4)}
+        >
+          Disabled
+        </CNavLink>
+      </CNavItem>
+    </CNav>
+    <CTabContent>
+      <CTabPane role="tabpanel" aria-labelledby="home-tab-pane" visible={activeKey === 1}>
+      <CForm validated={true}>
+  <div className="mb-3">
+    <CFormTextarea
+      feedbackInvalid="Please enter a message in the textarea."
+      id="validationTextarea"
+      label="Textarea"
+      placeholder="Required example textarea"
+      required
+    ></CFormTextarea>
+  </div>
   
+  <div className="mb-3">
+    <CFormInput
+      type="file"
+      id="validationTextarea"
+      feedbackInvalid="Example invalid form file feedback"
+      aria-label="file example"
+      required
+    />
+  </div>
+  <div className="mb-3">
+    <CButton type="submit" color="primary" disabled>
+      Submit form
+    </CButton>
+  </div>
+</CForm>
+      </CTabPane>
+      <CTabPane role="tabpanel" aria-labelledby="profile-tab-pane" visible={activeKey === 2}>
+        Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.
+        Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan
+        four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft
+        beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic,
+        assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero
+        magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit,
+        sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party
+        scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.
+      </CTabPane>
+      <CTabPane role="tabpanel" aria-labelledby="contact-tab-pane" visible={activeKey === 3}>
+        Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic
+        lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork
+        tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie
+        helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.
+        Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro
+        mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog
+        stumptown. Pitchfork sustainable tofu synth chambray yr.
+      </CTabPane>
+      <CTabPane role="tabpanel" aria-labelledby="disabled-tab-pane" visible={activeKey === 3}>
+        Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic
+        lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork
+        tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica.
+        DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh
+        mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog.
+        Scenester cred you probably haven't heard of them, vinyl craft beer blog stumptown.
+        Pitchfork sustainable tofu synth chambray yr.
+      </CTabPane>
+    </CTabContent>
   
 
                 </CCardBody>

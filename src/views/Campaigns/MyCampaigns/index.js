@@ -175,7 +175,7 @@ const MyCampaigns = () => {
                       <CTableRow v-for="item in tableItems" key={index}>
                         <CTableDataCell className="text-center">
                         
-                           <CAvatar size="md" src={"de"}  /> 
+                        <CIcon icon={cilUser} size="lg"/>
                             
                          
                         </CTableDataCell>

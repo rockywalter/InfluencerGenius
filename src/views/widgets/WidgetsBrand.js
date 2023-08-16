@@ -1,9 +1,9 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 import { CWidgetStatsD, CRow, CCol } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { cibFacebook, cibLinkedin, cibTwitter, cilCalendar } from '@coreui/icons'
+import { cibFacebook, cibCoveralls, cibInstagram, cilCalendar,cibYoutube} from '@coreui/icons'
 import { CChart } from '@coreui/react-chartjs'
+import React, { useEffect ,useState } from 'react';
 
 const WidgetsBrand = ({ withCharts }) => {
   const chartOptions = {
@@ -34,6 +34,67 @@ const WidgetsBrand = ({ withCharts }) => {
     },
   }
 
+  let[facebookCount,setFacebookCount] = useState('');
+  let[youtubeCount,setYoutubeCount] = useState('');
+  let[instaCount,setInstaCount] = useState('');
+  let[allinfCount,setAllInfCount] = useState('');
+
+  useEffect(() => {
+    // This code will run only once when the component is mounted
+    console.log('Component mounted.');
+
+    fetch(`http://localhost:5000/influencerinfo/socialmediacount/Facebook`)
+    .then(response => response.json())
+    .then(data => {
+      const responseString = JSON.stringify(data.count);
+      setFacebookCount(responseString)
+    })
+    .catch(error => {
+      // Handle any errors
+      console.error('Error fetching flights:', error);
+    });
+
+    fetch(`http://localhost:5000/influencerinfo/socialmediacount/Youtube`)
+    .then(response => response.json())
+    .then(data => {
+      const responseString = JSON.stringify(data.count);
+      setYoutubeCount(responseString)
+    })
+    .catch(error => {
+      // Handle any errors
+      console.error('Error fetching flights:', error);
+    });
+
+    fetch(`http://localhost:5000/influencerinfo/socialmediacount/Instagram`)
+    .then(response => response.json())
+    .then(data => {
+      const responseString = JSON.stringify(data.count);
+      setInstaCount(responseString)
+    })
+    .catch(error => {
+      // Handle any errors
+      console.error('Error fetching flights:', error);
+    });
+  
+
+    fetch(`http://localhost:5000/influencerinfo/allcount`)
+    .then(response => response.json())
+    .then(data => {
+      const responseString = JSON.stringify(data.count);
+      setAllInfCount(responseString)
+    })
+    .catch(error => {
+      // Handle any errors
+      console.error('Error fetching flights:', error);
+    });
+
+  
+    return () => {
+      console.log('Component unmounted.');
+      // Cleanup code here
+    };
+  }, []);
+
   return (
     <CRow>
       <CCol sm={6} lg={3}>
@@ -63,8 +124,8 @@ const WidgetsBrand = ({ withCharts }) => {
           })}
           icon={<CIcon icon={cibFacebook} height={52} className="my-4 text-white" />}
           values={[
-            { title: 'friends', value: '89K' },
-            { title: 'feeds', value: '459' },
+            { title: 'Influencer Count', value: facebookCount },
+            // { title: 'All Influencer Count', value: allinfCount },
           ]}
           style={{
             '--cui-card-cap-bg': '#3b5998',
@@ -97,13 +158,13 @@ const WidgetsBrand = ({ withCharts }) => {
               />
             ),
           })}
-          icon={<CIcon icon={cibTwitter} height={52} className="my-4 text-white" />}
+          icon={<CIcon icon={cibYoutube} height={52} className="my-4 text-white" />}
           values={[
-            { title: 'followers', value: '973k' },
-            { title: 'tweets', value: '1.792' },
+            { title: 'Influencer Count', value: youtubeCount },
+            // { title: 'All Influencer Count', value: allinfCount },
           ]}
           style={{
-            '--cui-card-cap-bg': '#00aced',
+            '--cui-card-cap-bg': '#FF0000',
           }}
         />
       </CCol>
@@ -133,13 +194,13 @@ const WidgetsBrand = ({ withCharts }) => {
               />
             ),
           })}
-          icon={<CIcon icon={cibLinkedin} height={52} className="my-4 text-white" />}
+          icon={<CIcon icon={cibInstagram} height={52} className="my-4 text-white" />}
           values={[
-            { title: 'contacts', value: '500' },
-            { title: 'feeds', value: '1.292' },
+            { title: 'Influencer Count', value: instaCount },
+            // { title: 'All Influencer Count', value: allinfCount },
           ]}
           style={{
-            '--cui-card-cap-bg': '#4875b4',
+            '--cui-card-cap-bg': '#F70F59',
           }}
         />
       </CCol>
@@ -170,10 +231,9 @@ const WidgetsBrand = ({ withCharts }) => {
               />
             ),
           })}
-          icon={<CIcon icon={cilCalendar} height={52} className="my-4 text-white" />}
+          icon={<CIcon icon={cibCoveralls} height={52} className="my-4 text-white" />}
           values={[
-            { title: 'events', value: '12+' },
-            { title: 'meetings', value: '4' },
+            { title: 'All Influencers', value: allinfCount },
           ]}
         />
       </CCol>

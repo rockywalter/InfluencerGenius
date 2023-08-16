@@ -1,7 +1,7 @@
 import { CForm, CTableHead, CTableRow, CTableHeaderCell, 
   CButton,CCard,CCardBody,CCardHeader,CCol,CFormSelect,
   CTableBody,CTableDataCell,CAvatar,CTable,CRow, CModal,
-  CModalHeader, CModalTitle, CModalBody, CModalFooter,CFormInput} from '@coreui/react'
+  CModalHeader, CModalTitle, CModalBody, CModalFooter,CFormInput,CProgress} from '@coreui/react'
   import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from '@mui/x-charts';
   import { CChart } from '@coreui/react-chartjs'
   import CIcon from '@coreui/icons-react'
@@ -18,6 +18,7 @@ import { CForm, CTableHead, CTableRow, CTableHeaderCell,
   import { alignProperty } from '@mui/material/styles/cssUtils';
   import { TagsInput } from "react-tag-input-component";
 import LinearProgress from '@mui/material/LinearProgress';
+import { getStyle, hexToRgba } from '@coreui/utils'
   import {
     cilLibraryAdd,
     cibCcApplePay,
@@ -33,7 +34,7 @@ import LinearProgress from '@mui/material/LinearProgress';
     cifFr,
     cifIn,
     cifPl,
-    cifUs,
+    cidPerson,
     cibTwitter,
     cilUser,
     cilPeople,
@@ -47,13 +48,54 @@ import LinearProgress from '@mui/material/LinearProgress';
   import avatar4 from 'src/assets/images/avatars/4.jpg'
   import avatar5 from 'src/assets/images/avatars/5.jpg'
   import avatar6 from 'src/assets/images/avatars/6.jpg'
+  import avatar7 from 'src/assets/images/avatars/7.jpg'
+  import avatar8 from 'src/assets/images/avatars/8.jpg'
+  import avatar9 from 'src/assets/images/avatars/9.jpg'
+  import avatar10 from 'src/assets/images/avatars/10.jpg'
+  import avatar11 from 'src/assets/images/avatars/11.jpg'
+  import avatar12 from 'src/assets/images/avatars/12.jpg'
+  import avatar13 from 'src/assets/images/avatars/13.jpg'
+  import avatar14 from 'src/assets/images/avatars/14.jpg'
+  import avatar15 from 'src/assets/images/avatars/15.jpg'
+  import avatar16 from 'src/assets/images/avatars/16.jpg'
+  import avatar17 from 'src/assets/images/avatars/17.jpg'
+  import avatar18 from 'src/assets/images/avatars/18.jpg'
+  import avatar19 from 'src/assets/images/avatars/19.jpg'
+  import avatar20 from 'src/assets/images/avatars/20.jpg'
+  
 
   
   import {CCardImage,CCardTitle,CCardText} from '@coreui/react'
+import { blue } from '@mui/material/colors';
   
   
   const Analyzer = () => {
+     
+    const avatarImages = [
+      avatar1,  
+      avatar2,  
+      avatar3,  
+      avatar4,
+      avatar5,
+      avatar6,
+      avatar7,
+      avatar8,
+      avatar9,
+      avatar10,
+      avatar11,  
+      avatar12,  
+      avatar13,  
+      avatar14,
+      avatar15,
+      avatar16,
+      avatar17,
+      avatar18,
+      avatar19,
+      avatar20,
+      
+    ];
 
+    
     
 
     let[fetcheddata,setData] = useState([])
@@ -100,6 +142,7 @@ import LinearProgress from '@mui/material/LinearProgress';
       const [influencerNames, setInfluencerNames] = useState([]);
       const [influencerFollowers, setInfluencerFollowers] = useState([]);
 
+      
 
       useEffect(() => {
         console.log("Updated influencers:", influencers);
@@ -137,6 +180,8 @@ import LinearProgress from '@mui/material/LinearProgress';
           const followers = data.map(item => item["Followers Count"]);
           setInfluencerFollowers(followers);
 
+  
+
          
             setIsLoading(false);
           })
@@ -145,6 +190,7 @@ import LinearProgress from '@mui/material/LinearProgress';
             setIsLoading(false);
             setIsShowingResults(false)
           });
+ 
 
           
 
@@ -266,9 +312,10 @@ import LinearProgress from '@mui/material/LinearProgress';
                     </CTableHeaderCell>
                     <CTableHeaderCell>Influencer Name</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Social Media Platform</CTableHeaderCell>
-                    <CTableHeaderCell>Followers/Sub count</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Category</CTableHeaderCell>
+                    {/* <CTableHeaderCell>Followers/Sub count</CTableHeaderCell> */}
+                    <CTableHeaderCell className="text-center">Category Posts</CTableHeaderCell>
                     <CTableHeaderCell>Review Score</CTableHeaderCell>
+                    <CTableHeaderCell>Keyword Frequency</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>   
@@ -276,8 +323,8 @@ import LinearProgress from '@mui/material/LinearProgress';
                     <CTableRow v-for="item in tableItems" key={index}>
                       <CTableDataCell className="text-center">
                       
-                         <CAvatar size="md" src={"de"}  /> 
-                          
+                         <CAvatar size="md" src={avatarImages[index % avatarImages.length]} /> 
+                         {/* <CIcon icon={cilUser} size="md"/>  */}
                        
                       </CTableDataCell>
                       <CTableDataCell>
@@ -290,44 +337,73 @@ import LinearProgress from '@mui/material/LinearProgress';
                       <CTableDataCell className="text-center">
                       <div>{item['Social Media Platform']}</div>
                       </CTableDataCell>
-                      <CTableDataCell>
-                        <div className="clearfix">
-                          <div className="float-start">
-                               {item['Followers Count']}
-                          </div>
-                          <div className="float-end">
+                      {/* <CTableDataCell> */}
+                        {/* <div className="clearfix"> */}
+                          {/* <div className="float-start"> */}
+                               {/* {item['Followers Count']} */}
+                          {/* </div> */}
+                          {/* <div className="float-end"> */}
                             {/* <small className="text-medium-emphasis">{item.usage.period}</small> */}
-                          </div>
-                        </div>
-                        {/* <CProgress thin color={item.usage.color} value={item.usage.value} /> */}
-                      </CTableDataCell>
+                          {/* </div> */}
+                        {/* </div> */}
+                        {/* <CProgress thin color={blue} value={item['Followers Count']} /> */}
+                      {/* </CTableDataCell> */}
                       <CTableDataCell className="text-center">
                       <div>{item['category']}</div>
                       </CTableDataCell>
                       <CTableDataCell>
                         {/* <div className="small text-medium-emphasis">Last login</div> */}
                        {item['review_score']}
+                       
+                      </CTableDataCell>
+                      <CTableDataCell>
+                       {item['hash_tags']}
                       </CTableDataCell>
                     </CTableRow>
                   ))}
                 </CTableBody>
               </CTable>
 
-              <BarChart
-  xAxis={[
-    {
-      id: 'barCategories',
-      data: influencerNames,
-      scaleType: 'band',
+              <CChart 
+  type="bar"
+  data={{
+    labels:influencerNames,
+    datasets: [
+      {
+        label: 'Followers Count',
+        backgroundColor: '#4DC374',
+        data: influencerFollowers,
+      },
+    ],
+  }}
+  labels="category"
+  options={{
+    plugins: {
+      legend: {
+        labels: {
+          color: getStyle('--cui-body-color'),
+        }
+      }
     },
-  ]}
-  series={[
-    {
-      data:[1,2,3,4,5,6,7,8,98,5,3]
+    scales: {
+      x: {
+        grid: {
+          color: getStyle('--cui-border-color-translucent'),
+        },
+        ticks: {
+          color: getStyle('--cui-body-color'),
+        },
+      },
+      y: {
+        grid: {
+          color: getStyle('--cui-border-color-translucent'),
+        },
+        ticks: {
+          color: getStyle('--cui-body-color'),
+        },
+      },
     },
-  ]}
-  width={1500}
-  height={300}
+  }}
 />
 
 
@@ -358,67 +434,7 @@ import LinearProgress from '@mui/material/LinearProgress';
     </CModal>
   </>
                 
-       {/* <Container component="main" maxWidth="sm">
-        <Box
-          sx={{
-            boxShadow: 3,
-            borderRadius: 2,
-            px: 4,
-            py: 6,
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            bgcolor:"#46546C"
-          }}
-        >
-         
-        </Box>
-      </Container> */}
-  
-  
-  {/* <>
-        <Swiper
-          effect={'coverflow'}
-          grabCursor={true}
-          centeredSlides={true}
-          slidesPerView={'auto'}
-          coverflowEffect={{
-            rotate: 50,
-            stretch: 0,
-            depth: 100,
-            modifier: 1,
-            slideShadows: true,
-          }}
-          pagination={true}
-          modules={[EffectCoverflow, Pagination]}
-          className="mySwiper"
-        >
-          <SwiperSlide>
-          <CCard style={{ width: '18rem' }}>
-    <CCardImage orientation="top"  src={"https://i.ibb.co/8z1nt7x/2.png"}/>
-    <CCardBody>
-      <CCardTitle>Card title</CCardTitle>
-      <CCardText>
-        Some quick example text to build on the card title and make up the bulk of the 
-      </CCardText>
-    </CCardBody>
-    <CCardBody>
-      <CCardLink href="#">Card link</CCardLink>
-      <CCardLink href="#">Another link</CCardLink>
-    </CCardBody>
-  </CCard>
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-          </SwiperSlide>
-       
-        </Swiper>
-      </> */}
-      
+ 
        
   
   
