@@ -4,7 +4,7 @@ import CIcon from '@coreui/icons-react'
 import { CForm, CTableHead, CTableRow, CTableHeaderCell, 
   CButton,CCard,CCardBody,CCardHeader,CCol,CFormSelect,
   CTableBody,CTableDataCell,CAvatar,CProgress,CTable,CButtonGroup,CModal,
-  CModalHeader, CModalTitle, CModalBody, CModalFooter  } from '@coreui/react'
+  CModalHeader, CModalTitle, CModalBody, CSpinner  } from '@coreui/react'
   import { useNavigate } from 'react-router-dom';
   import {
     cilTrash,
