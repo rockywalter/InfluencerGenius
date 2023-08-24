@@ -12,7 +12,7 @@ import { CForm, CTableHead, CTableRow, CTableHeaderCell,
   import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
   import React, {useEffect,useState } from 'react';
   import Box from "@mui/material/Box";
-  import Container from "@mui/material/Container";
+  import CircularProgress from '@mui/material/CircularProgress';
   import TextField from '@mui/material/TextField';
   import { DocsExample } from 'src/components'
   import { alignProperty } from '@mui/material/styles/cssUtils';
@@ -42,6 +42,9 @@ import { getStyle, hexToRgba } from '@coreui/utils'
     cilUserFemale,
     cilSearch,
   } from '@coreui/icons'
+import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
   import avatar1 from 'src/assets/images/avatars/1.jpg'
   import avatar2 from 'src/assets/images/avatars/2.jpg'
   import avatar3 from 'src/assets/images/avatars/3.jpg'
@@ -62,14 +65,33 @@ import { getStyle, hexToRgba } from '@coreui/utils'
   import avatar18 from 'src/assets/images/avatars/18.jpg'
   import avatar19 from 'src/assets/images/avatars/19.jpg'
   import avatar20 from 'src/assets/images/avatars/20.jpg'
+
   
 
   
   import {CCardImage,CCardTitle,CCardText} from '@coreui/react'
 import { blue } from '@mui/material/colors';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
   
   
   const Analyzer = () => {
+
+    const [open, setOpen] = React.useState(false);
+    const [openError, setErrorOpen] = React.useState(false);
+
+ 
+
+
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpen(false);
+    };
      
     const avatarImages = [
       avatar1,  
@@ -96,9 +118,7 @@ import { blue } from '@mui/material/colors';
     ];
 
     
-    
-
-    let[fetcheddata,setData] = useState([])
+  
 
   
       const [expanded, setExpanded] = React.useState(false);
@@ -110,31 +130,7 @@ import { blue } from '@mui/material/colors';
       };
   
   
-      const tableavatar = [ avatar1,avatar2,avatar3 ,avatar4 ,avatar5 ,avatar6]
    
-    
-      const progressGroupExample1 = [
-        { title: 'Monday', value1: 34, value2: 50 },
-        { title: 'Tuesday', value1: 56, value2: 94 },
-        { title: 'Wednesday', value1: 12, value2: 67 },
-        { title: 'Thursday', value1: 43, value2: 91 },
-        { title: 'Friday', value1: 22, value2: 73 },
-        { title: 'Saturday', value1: 53, value2: 82 },
-        { title: 'Sunday', value1: 9, value2: 69 },
-      ]
-  
-      const progressGroupExample2 = [
-        { title: 'Male', icon: cilUser, value: 53 },
-        { title: 'Female', icon: cilUserFemale, value: 43 },
-      ]
-    
-      const progressGroupExample3 = [
-        { title: 'Organic Search', icon: cibGoogle, percent: 56, value: '191,235' },
-        { title: 'Facebook', icon: cibFacebook, percent: 15, value: '51,223' },
-        { title: 'Twitter', icon: cibTwitter, percent: 11, value: '37,564' },
-        { title: 'LinkedIn', icon: cibLinkedin, percent: 8, value: '27,319' },
-      ]
-    
 
       const[category,setCategory] = useState("")
       const[keywords,setKeywords] = useState([])
@@ -153,7 +149,8 @@ import { blue } from '@mui/material/colors';
 
       const handleSubmit = (e) => {
         e.preventDefault();
-        setIsLoading(true);
+        setIsShowingResults(false)
+        setIsLoading(true);     
         console.log(category)
         console.log(keywords)
     
@@ -189,6 +186,7 @@ import { blue } from '@mui/material/colors';
             console.error('Error fetching data:', error);
             setIsLoading(false);
             setIsShowingResults(false)
+            setErrorOpen(true)
           });
  
 
@@ -224,15 +222,17 @@ import { blue } from '@mui/material/colors';
           })
           .catch(error => {
             console.error('Error fetching data:', error);
+            setErrorOpen(true)
           });
           setVisible(false)
+          setOpen(true);
          
       };
   
     
     return (    
       <div>
-  
+     
       
   <CCol xs={12}>
           <CCard className="mb-4">
@@ -435,9 +435,19 @@ import { blue } from '@mui/material/colors';
   </>
                 
  
-       
+  <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          Campaign Saved!
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={openError} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          Something went wrong!
+        </Alert>
+      </Snackbar>
   
-  
+   
   
   
       </div>

@@ -1,13 +1,40 @@
 import React, { useEffect ,useState } from 'react';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import { CNav, CNavItem, CNavLink, CTabContent, 
     CTabPane,CCard,CCardBody,CCardHeader,CCol,CSpinner,
-    CTableBody,CTableDataCell,CAvatar,CProgress,CTable,CButtonGroup,CButton,
+    CFormLabel,CInputGroup ,CInputGroupText  ,CFormSelect ,CFormCheck ,CFormFeedback ,CButton,
     CModalHeader, CFormTextarea, CForm , CFormInput  } from '@coreui/react'
     import * as XLSX from 'xlsx';
+    
+
+    const Alert = React.forwardRef(function Alert(props, ref) {
+      return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
 
 const AddInfluencers = () => {
     const [activeKey, setActiveKey] = useState(1)
     const [isProcessing, setIsProcessing] = useState(false);
+    const[influencerID,setInfluencerID] = useState(0)  
+    const[influencerName,setInfluencerName] = useState("")
+    const[influencerFollowersCount,setInfluencerFollowersCount] = useState(0)
+    const[country,setCountry] = useState("")
+    const[scoialMediaPlatform,setScoialMediaPlatform] = useState("")
+    const[infDescription,setInfDescription] = useState("")
+    const[likeCount,setLikeCount] = useState(0)
+    const[commentCount,setCommentCount] = useState(0)
+    const[comments,setComment] = useState("")
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpen(false);
+    };
+
 
     const readFile = (file) => {
         return new Promise((resolve, reject) => {
@@ -49,6 +76,7 @@ const AddInfluencers = () => {
           }
         }
         setIsProcessing(false);
+        setOpen(true);
       };
     
       const handleSheet1 = (data) => {
@@ -118,7 +146,60 @@ const AddInfluencers = () => {
     
       // Define readFile and parseExcel functions
 
+      const handleInfluencersSubmit = (e) => { 
+        e.preventDefault();
 
+        const requestBody = {
+          influencer_id: parseInt(influencerID),
+          "Influencer Name":influencerName,
+          "Followers Count":parseInt(influencerFollowersCount),
+          "Country":country,
+          "Social Media Platform":scoialMediaPlatform,
+
+        
+        };
+
+        console.log(requestBody)
+        
+        sendRequest('http://localhost:5000/influencerinfo/add', requestBody);
+        setOpen(true);
+      };
+
+      
+      const handleDescriptionSubmit = (e) => { 
+        e.preventDefault();
+
+        const requestBody = {
+          influencer_id: parseInt(influencerID),
+          description: infDescription,
+          "Like Count for the post": parseInt(likeCount),
+          "Comment Count for the post": parseInt(commentCount),
+          "Followers Count for influencer": parseInt(influencerFollowersCount)
+        
+        };
+
+        console.log(requestBody)
+        
+        sendRequest('http://127.0.0.1:5000/description', requestBody);
+        setOpen(true);
+      };
+
+      
+      const handleCommentSubmit = (e) => { 
+        e.preventDefault();
+
+        const requestBody = {
+          influencer_id: parseInt(influencerID),
+          comment: comments,
+      
+        
+        };
+
+        console.log(requestBody)
+        
+        sendRequest('http://127.0.0.1:5000/comment', requestBody);
+        setOpen(true);
+      };
 
   return (
     <div>
@@ -132,7 +213,7 @@ const AddInfluencers = () => {
   
   
             <div className="mb-3">
-  <CFormInput type="file" id="formFile" label="Upload the influencer data XLSX file!" />
+  <CFormInput type="file" id="formFile" label="Upload the influencer data XLSX file!" required accept=".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
 </div>
 
 <CButton onClick={handleUpload} className="mb-3">
@@ -169,7 +250,7 @@ const AddInfluencers = () => {
           aria-selected={activeKey === 1}
           onClick={() => setActiveKey(1)}
         >
-          Home
+          Add Influencers
         </CNavLink>
       </CNavItem>
       <CNavItem role="presentation">
@@ -181,7 +262,7 @@ const AddInfluencers = () => {
           aria-selected={activeKey === 2}
           onClick={() => setActiveKey(2)}
         >
-          Profile
+          Add Descriptions/Captions
         </CNavLink>
       </CNavItem>
       <CNavItem role="presentation">
@@ -193,80 +274,185 @@ const AddInfluencers = () => {
           aria-selected={activeKey === 3}
           onClick={() => setActiveKey(3)}
         >
-          Contact
-        </CNavLink>
-      </CNavItem>
-      <CNavItem role="presentation">
-        <CNavLink
-          active={activeKey === 4}
-          component="button"
-          disabled
-          role="tab"
-          aria-controls="disabled-tab-pane"
-          aria-selected={activeKey === 4}
-          onClick={() => setActiveKey(4)}
-        >
-          Disabled
+          Add Comments
         </CNavLink>
       </CNavItem>
     </CNav>
     <CTabContent>
       <CTabPane role="tabpanel" aria-labelledby="home-tab-pane" visible={activeKey === 1}>
-      <CForm validated={true}>
-  <div className="mb-3">
-    <CFormTextarea
-      feedbackInvalid="Please enter a message in the textarea."
-      id="validationTextarea"
-      label="Textarea"
-      placeholder="Required example textarea"
-      required
-    ></CFormTextarea>
-  </div>
-  
-  <div className="mb-3">
-    <CFormInput
-      type="file"
-      id="validationTextarea"
-      feedbackInvalid="Example invalid form file feedback"
-      aria-label="file example"
+      <CForm className="row g-3" onSubmit={handleInfluencersSubmit}>
+  <CCol md={4}>
+    <CFormInput onChange={(e)=>{setInfluencerID(e.target.value);}}
+      type="text"
+      id="validationServer01"
+      label="Influencer ID"
+      // feedback="Looks good!"
+      // defaultValue="name@surname.com"
+      // valid
       required
     />
-  </div>
-  <div className="mb-3">
-    <CButton type="submit" color="primary" disabled>
-      Submit form
+  </CCol>
+  <CCol md={4}>
+    <CFormInput onChange={(e)=>{setInfluencerName(e.target.value);}}
+      type="text"
+      id="validationServer02"
+      label="Influencer Name"
+      // feedback="Looks good!"
+      // defaultValue="name@surname.com"
+      // valid
+      required
+    />
+  </CCol>
+  <CCol md={4}>
+  <CFormInput onChange={(e)=>{setInfluencerFollowersCount(e.target.value);}}
+      type="text"
+      id="validationServer02"
+      label="Followers Count"
+      // feedback="Looks good!"
+      // defaultValue="name@surname.com"
+      // valid
+      required
+    />
+  </CCol>
+  <CCol md={4}>
+  <CFormInput onChange={(e)=>{setCountry(e.target.value);}}
+      type="text"
+      id="validationServer02"
+      label="Country"
+      // feedback="Looks good!"
+      // defaultValue="name@surname.com"
+      // valid
+      required
+    />
+  </CCol>
+  <CCol md={3}>
+    <CFormSelect onChange={(e)=>{setScoialMediaPlatform(e.target.value);}}
+      id="validationServer04"
+      label="Scial Medai Platform"
+      // feedback="Please provide a valid city."
+      // invalid
+    >
+      <option defaultChecked>Choose</option>
+      <option >Facebook</option>
+      <option>Instagram</option>
+      <option>Youtube</option>
+    </CFormSelect>
+  </CCol>
+ 
+
+  <CCol xs={12}>
+    <CButton color="primary" type="submit">
+      Add
     </CButton>
-  </div>
+  </CCol>
 </CForm>
       </CTabPane>
+        
+
+
       <CTabPane role="tabpanel" aria-labelledby="profile-tab-pane" visible={activeKey === 2}>
-        Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.
-        Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan
-        four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft
-        beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic,
-        assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero
-        magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit,
-        sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party
-        scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.
+      <CForm className="row g-3" onSubmit={handleDescriptionSubmit}>
+  <CCol md={3}>
+    <CFormInput onChange={(e)=>{setInfluencerID(e.target.value);}}
+      type="text"
+      id="validationServer01"
+      label="Influencer ID"
+      // feedback="Looks good!"
+      // defaultValue="name@surname.com"
+      // valid
+      required
+    />
+  </CCol>
+
+  <CCol md={3}>
+  <CFormInput onChange={(e)=>{setLikeCount(e.target.value);}}
+      type="text"
+      id="validationServer02"
+      label="Like Count"
+      // feedback="Looks good!"
+      // defaultValue="name@surname.com"
+      // valid
+      required
+    />
+  </CCol>
+  <CCol md={3}>
+  <CFormInput onChange={(e)=>{setCommentCount(e.target.value);}}
+      type="text"
+      id="validationServer02"
+      label="Comment Count"
+      // feedback="Looks good!"
+      // defaultValue="name@surname.com"
+      // valid
+      required
+    />
+  </CCol>
+  <CCol md={3}>
+  <CFormInput onChange={(e)=>{setInfluencerFollowersCount(e.target.value);}}
+      type="text"
+      id="validationServer02"
+      label="Followers Count"
+      // feedback="Looks good!"
+      // defaultValue="name@surname.com"
+      // valid
+      required
+    />
+  </CCol>
+  <CCol md={12}>
+    <CFormTextarea onChange={(e)=>{setInfDescription(e.target.value);}}
+      type="text"
+      id="validationServer02"
+      label="Description/Caption"
+      // feedback="Looks good!"
+      // defaultValue="name@surname.com"
+      // valid
+      required
+    />
+  </CCol>
+
+  <CCol xs={12}>
+    <CButton color="primary" type="submit">
+      Add
+    </CButton>
+  </CCol>
+</CForm> 
       </CTabPane>
+
+
+
       <CTabPane role="tabpanel" aria-labelledby="contact-tab-pane" visible={activeKey === 3}>
-        Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic
-        lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork
-        tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie
-        helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.
-        Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro
-        mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog
-        stumptown. Pitchfork sustainable tofu synth chambray yr.
+      <CForm className="row g-3" onSubmit={handleCommentSubmit}>
+  <CCol md={12}>
+    <CFormInput onChange={(e)=>{setInfluencerID(e.target.value);}}
+      type="text"
+      id="validationServer01"
+      label="Influencer ID"
+      // feedback="Looks good!"
+      // defaultValue="name@surname.com"
+      // valid
+      required
+    />
+  </CCol>
+  
+  <CCol md={12}>
+  <CFormTextarea onChange={(e)=>{setComment(e.target.value);}}
+      feedbackInvalid="Please enter a comment"
+      id="validationTextarea"
+      label="Comment"
+      placeholder="Type a Comment"
+      required
+    ></CFormTextarea>
+  </CCol>
+
+ 
+
+  <CCol xs={12}>
+    <CButton color="primary" type="submit">
+      Add
+    </CButton>
+  </CCol>
+</CForm>
       </CTabPane>
-      <CTabPane role="tabpanel" aria-labelledby="disabled-tab-pane" visible={activeKey === 3}>
-        Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic
-        lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork
-        tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica.
-        DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh
-        mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog.
-        Scenester cred you probably haven't heard of them, vinyl craft beer blog stumptown.
-        Pitchfork sustainable tofu synth chambray yr.
-      </CTabPane>
+ 
     </CTabContent>
   
 
@@ -275,8 +461,14 @@ const AddInfluencers = () => {
         </CCol>
 
 
-
-
+ 
+ 
+ 
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          Successfully Saved!
+        </Alert>
+      </Snackbar>
 
 
 

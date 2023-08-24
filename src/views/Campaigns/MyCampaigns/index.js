@@ -44,9 +44,12 @@ const MyCampaigns = () => {
   const [visibleXL, setVisibleXL] = useState(false)
   let[influencers,setInfluencers] = useState([])
   let[campaignData,setCampaign] = useState([])
+  const [isVisible, setIsVisible] = useState(false);
+  
 
   useEffect(() => {
     // This code will run only once when the component is mounted
+    setIsVisible(true);
     console.log('Component mounted.');
 
     fetch(`http://localhost:5000/campaign`)
@@ -54,14 +57,14 @@ const MyCampaigns = () => {
     .then(data => {
           setData(data)
           console.log(data);
+          setIsVisible(false);
     })
     .catch(error => {
       // Handle any errors
       console.error('Error fetching flights:', error);
     });
-  
-
-  
+    
+    setIsVisible(false);
     return () => {
       console.log('Component unmounted.');
       // Cleanup code here
@@ -155,7 +158,7 @@ const MyCampaigns = () => {
             </CCardHeader>
             
             <CCardBody>
-  
+            {isVisible &&  <div className="text-center"> <CSpinner color="primary" /></div>}
   
       <CTable align="middle" className="mb-0 border" hover responsive>
                   <CTableHead color="light">
