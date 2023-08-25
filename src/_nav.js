@@ -62,7 +62,7 @@ const _nav = [
     name: 'View Influencers',
     to: '/influencers/viewinfluencers',
     icon: <CIcon icon={cilFindInPage} customClassName="nav-icon" />,
-  },
+  }
 
 ]
 
