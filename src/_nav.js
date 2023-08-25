@@ -46,7 +46,6 @@ const _nav = [
     to: '/campaigns/mycampaigns',
     icon: <CIcon icon={cilBookmark} customClassName="nav-icon" />,
   },
-  ,
   {
     component: CNavTitle,
     name: 'Influencers',
