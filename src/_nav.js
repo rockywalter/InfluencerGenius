@@ -43,7 +43,7 @@ const _nav = [
   {
     component: CNavItem,
     name: 'All Campaigns',
-    to: '/campaigns/mycampaigns',
+    to: 'mycampaigns',
     icon: <CIcon icon={cilBookmark} customClassName="nav-icon" />,
   },
   {
@@ -53,13 +53,13 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Add Influencers',
-    to: '/influencers/addinfluencers',
+    to: '/addinfluencers',
     icon: <CIcon icon={cilUserPlus} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: 'View Influencers',
-    to: '/influencers/viewinfluencers',
+    to: '/viewinfluencers',
     icon: <CIcon icon={cilFindInPage} customClassName="nav-icon" />,
   }
 

@@ -104,11 +104,11 @@ const routes = [
   { path: '/notifications/modals', name: 'Modals', element: Modals },
   { path: '/notifications/toasts', name: 'Toasts', element: Toasts },
   { path: '/widgets', name: 'Widgets', element: Widgets },
-  { path: '/campaigns/createcampaigns', name: 'Create Campaings', element: CreateCampaings },
-  { path: '/campaigns/mycampaigns', name: 'My Campaings', element: MyCampaings },
+  { path: '/createcampaigns', name: 'Create Campaings', element: CreateCampaings },
+  { path: '/mycampaigns', name: 'My Campaings', element: MyCampaings },
   { path: '/analyzer', name: 'Analyzer', element: Analyzer},
-  { path: 'influencers/addinfluencers', name: 'Add Influencers', element: AddInfluencers},
-  { path: 'influencers/viewinfluencers', name: 'View Influencers', element: ViewInfluencers},
+  { path: '/addinfluencers', name: 'Add Influencers', element: AddInfluencers},
+  { path: '/viewinfluencers', name: 'View Influencers', element: ViewInfluencers},
 ]
 
 export default routes
