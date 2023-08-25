@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import { CWidgetStatsD, CRow, CCol } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { cibFacebook, cibCoveralls, cibInstagram, cilCalendar,cibYoutube} from '@coreui/icons'
+import { cibFacebook, cibCoveralls, cibInstagram,cibYoutube} from '@coreui/icons'
 import { CChart } from '@coreui/react-chartjs'
 import React, { useEffect ,useState } from 'react';
 

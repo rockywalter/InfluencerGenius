@@ -7,7 +7,7 @@ import {
   cilUserPlus,
   cilBookmark
 } from '@coreui/icons'
-import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
+import {  CNavItem, CNavTitle } from '@coreui/react'
 
 const _nav = [
   {
@@ -18,7 +18,7 @@ const _nav = [
     badge: {
       color: 'info',
       text: '',
-    },   
+    }   
   },
   {
     component: CNavTitle,

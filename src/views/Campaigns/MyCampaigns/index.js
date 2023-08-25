@@ -5,7 +5,6 @@ import { CTableHead, CTableRow, CTableHeaderCell,
   CButton,CCard,CCardBody,CCardHeader,CCol,
   CTableBody,CTableDataCell,CTable,CButtonGroup,CModal,
   CModalHeader, CModalTitle, CModalBody, CSpinner  } from '@coreui/react'
-  import { useNavigate } from 'react-router-dom';
   import {
     cilTrash,
     cilFolderOpen,
@@ -21,7 +20,6 @@ import { CTableHead, CTableRow, CTableHeaderCell,
 const MyCampaigns = () => {
 
   let[fetcheddata,setData] = useState([])
-  const navigate = useNavigate();
   const [visibleXL, setVisibleXL] = useState(false)
   let[influencers,setInfluencers] = useState([])
   let[campaignData,setCampaign] = useState([])

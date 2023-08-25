@@ -1,6 +1,6 @@
 import { CForm, CTableHead, CTableRow, CTableHeaderCell, 
   CButton,CCard,CCardBody,CCardHeader,CCol,CFormSelect,
-  CTableBody,CTableDataCell,CAvatar,CTable,CRow, CModal,
+  CTableBody,CTableDataCell,CAvatar,CTable, CModal,
   CModalHeader, CModalTitle, CModalBody, CModalFooter,CFormInput} from '@coreui/react'
   import { CChart } from '@coreui/react-chartjs'
   import CIcon from '@coreui/icons-react'
@@ -8,7 +8,7 @@ import { CForm, CTableHead, CTableRow, CTableHeaderCell,
   import Box from "@mui/material/Box";
   import { TagsInput } from "react-tag-input-component";
 import LinearProgress from '@mui/material/LinearProgress';
-import { getStyle, hexToRgba } from '@coreui/utils'
+import { getStyle } from '@coreui/utils'
   import {
     cilLibraryAdd,
     cilPeople,
@@ -85,17 +85,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
     ];
 
     
-  
-
-  
-      const [expanded, setExpanded] = React.useState(false);
-      const [selected, setSelected] = useState([]);
-      
-  
-      const handleChange = (panel) => (event, isExpanded) => {
-        setExpanded(isExpanded ? panel : false);
-      };
-  
   
    
 
