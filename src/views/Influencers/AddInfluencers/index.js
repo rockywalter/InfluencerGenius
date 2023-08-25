@@ -1,10 +1,9 @@
-import React, { useEffect ,useState } from 'react';
+import React, { useState } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { CNav, CNavItem, CNavLink, CTabContent, 
     CTabPane,CCard,CCardBody,CCardHeader,CCol,CSpinner,
-    CFormLabel,CInputGroup ,CInputGroupText  ,CFormSelect ,CFormCheck ,CFormFeedback ,CButton,
-    CModalHeader, CFormTextarea, CForm , CFormInput  } from '@coreui/react'
+    CFormSelect,CButton, CFormTextarea, CForm , CFormInput  } from '@coreui/react'
     import * as XLSX from 'xlsx';
     
 

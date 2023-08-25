@@ -1,48 +1,20 @@
 import { CForm, CTableHead, CTableRow, CTableHeaderCell, 
   CButton,CCard,CCardBody,CCardHeader,CCol,CFormSelect,
   CTableBody,CTableDataCell,CAvatar,CTable,CRow, CModal,
-  CModalHeader, CModalTitle, CModalBody, CModalFooter,CFormInput,CProgress} from '@coreui/react'
-  import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from '@mui/x-charts';
+  CModalHeader, CModalTitle, CModalBody, CModalFooter,CFormInput} from '@coreui/react'
   import { CChart } from '@coreui/react-chartjs'
   import CIcon from '@coreui/icons-react'
-  import Accordion from '@mui/material/Accordion';
-  import AccordionDetails from '@mui/material/AccordionDetails';
-  import AccordionSummary from '@mui/material/AccordionSummary';
-  import Typography from '@mui/material/Typography';
-  import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
   import React, {useEffect,useState } from 'react';
   import Box from "@mui/material/Box";
-  import CircularProgress from '@mui/material/CircularProgress';
-  import TextField from '@mui/material/TextField';
-  import { DocsExample } from 'src/components'
-  import { alignProperty } from '@mui/material/styles/cssUtils';
   import { TagsInput } from "react-tag-input-component";
 import LinearProgress from '@mui/material/LinearProgress';
 import { getStyle, hexToRgba } from '@coreui/utils'
   import {
     cilLibraryAdd,
-    cibCcApplePay,
-    cibCcMastercard,
-    cibCcPaypal,
-    cibCcStripe,
-    cibCcVisa,
-    cibGoogle,
-    cibFacebook,
-    cibLinkedin,
-    cifBr,
-    cifEs,
-    cifFr,
-    cifIn,
-    cifPl,
-    cidPerson,
-    cibTwitter,
-    cilUser,
     cilPeople,
     cilSave,
-    cilUserFemale,
     cilSearch,
   } from '@coreui/icons'
-import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
   import avatar1 from 'src/assets/images/avatars/1.jpg'
@@ -66,11 +38,6 @@ import MuiAlert from '@mui/material/Alert';
   import avatar19 from 'src/assets/images/avatars/19.jpg'
   import avatar20 from 'src/assets/images/avatars/20.jpg'
 
-  
-
-  
-  import {CCardImage,CCardTitle,CCardText} from '@coreui/react'
-import { blue } from '@mui/material/colors';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;

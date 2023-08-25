@@ -1,10 +1,8 @@
 import React, { useEffect ,useState } from 'react';
 import { CNav, CNavItem, CNavLink, CTabContent, 
-  CTabPane,CCard,CCardBody,CCardHeader,CCol,CSpinner,
-  CTableBody,CTableDataCell,CAvatar,CProgress,CTable,CButtonGroup,CButton,
-  CModalHeader, CModalTitle, CModalBody, CFormInput  } from '@coreui/react'
+  CTabPane,CCard,CCardBody,CCardHeader,CCol,CSpinner } from '@coreui/react'
 import { DataGrid } from '@mui/x-data-grid'; 
-import { v4 as uuidv4 } from 'uuid';
+
   
 
 const ViewInfluencers = () => {

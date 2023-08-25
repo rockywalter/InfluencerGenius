@@ -1,9 +1,9 @@
-import { CFormLabel, CFormInput} from '@coreui/react'
+
 import React, { useEffect ,useState } from 'react';
 import CIcon from '@coreui/icons-react'
-import { CForm, CTableHead, CTableRow, CTableHeaderCell, 
-  CButton,CCard,CCardBody,CCardHeader,CCol,CFormSelect,
-  CTableBody,CTableDataCell,CAvatar,CProgress,CTable,CButtonGroup,CModal,
+import { CTableHead, CTableRow, CTableHeaderCell, 
+  CButton,CCard,CCardBody,CCardHeader,CCol,
+  CTableBody,CTableDataCell,CTable,CButtonGroup,CModal,
   CModalHeader, CModalTitle, CModalBody, CSpinner  } from '@coreui/react'
   import { useNavigate } from 'react-router-dom';
   import {
@@ -11,29 +11,10 @@ import { CForm, CTableHead, CTableRow, CTableHeaderCell,
     cilFolderOpen,
     cilLayers,
     cilPin,
-    cibCcStripe,
-    cibCcVisa,
-    cibGoogle,
-    cibFacebook,
-    cibLinkedin,
-    cifBr,
-    cifEs,
-    cifFr,
-    cifIn,
-    cifPl,
-    cifUs,
-    cibTwitter,
     cilUser,
     cilPeople,
-    cilSave,
-    cilUserFemale,
   } from '@coreui/icons'
-  import avatar1 from 'src/assets/images/avatars/1.jpg'
-  import avatar2 from 'src/assets/images/avatars/2.jpg'
-  import avatar3 from 'src/assets/images/avatars/3.jpg'
-  import avatar4 from 'src/assets/images/avatars/4.jpg'
-  import avatar5 from 'src/assets/images/avatars/5.jpg'
-  import avatar6 from 'src/assets/images/avatars/6.jpg'
+
 
 
 
