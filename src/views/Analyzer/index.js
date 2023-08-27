@@ -114,7 +114,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
         }
     
         return () => clearInterval(interval);
-      }, [displaying]);
+      }, [displaying, sentences.length]);
     
 
       const [isLoading, setIsLoading] = useState(false);
