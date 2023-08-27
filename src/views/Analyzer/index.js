@@ -268,7 +268,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
                     </CTableHeaderCell>
                     <CTableHeaderCell>Influencer Name</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Social Media Platform</CTableHeaderCell>
-                    {/* <CTableHeaderCell>Followers/Sub count</CTableHeaderCell> */}
+                    <CTableHeaderCell>Followers/Sub count</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Category Posts</CTableHeaderCell>
                     <CTableHeaderCell>Review Score</CTableHeaderCell>
                     <CTableHeaderCell>Keyword Frequency</CTableHeaderCell>
@@ -293,26 +293,26 @@ const Alert = React.forwardRef(function Alert(props, ref) {
                       <CTableDataCell className="text-center">
                       <div>{item['Social Media Platform']}</div>
                       </CTableDataCell>
-                      {/* <CTableDataCell> */}
+                      <CTableDataCell className="text-center">
                         {/* <div className="clearfix"> */}
-                          {/* <div className="float-start"> */}
-                               {/* {item['Followers Count']} */}
-                          {/* </div> */}
+                          <div>
+                               {item['Followers Count']}
+                          </div>
                           {/* <div className="float-end"> */}
                             {/* <small className="text-medium-emphasis">{item.usage.period}</small> */}
                           {/* </div> */}
                         {/* </div> */}
                         {/* <CProgress thin color={blue} value={item['Followers Count']} /> */}
-                      {/* </CTableDataCell> */}
+                      </CTableDataCell>
                       <CTableDataCell className="text-center">
                       <div>{item['category']}</div>
                       </CTableDataCell>
-                      <CTableDataCell>
+                      <CTableDataCell className="text-center">
                         {/* <div className="small text-medium-emphasis">Last login</div> */}
                        {item['review_score']}
                        
                       </CTableDataCell>
-                      <CTableDataCell>
+                      <CTableDataCell className="text-center">
                        {item['hash_tags']}
                       </CTableDataCell>
                     </CTableRow>

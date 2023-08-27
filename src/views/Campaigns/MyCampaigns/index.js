@@ -17,6 +17,7 @@ import { CTableHead, CTableRow, CTableHeaderCell,
 
 
 
+
 const MyCampaigns = () => {
 
   let[fetcheddata,setData] = useState([])
@@ -24,7 +25,7 @@ const MyCampaigns = () => {
   let[influencers,setInfluencers] = useState([])
   let[campaignData,setCampaign] = useState([])
   const [isVisible, setIsVisible] = useState(false);
-  
+
 
   useEffect(() => {
     // This code will run only once when the component is mounted
@@ -57,7 +58,24 @@ const MyCampaigns = () => {
     setVisibleXL(!visibleXL)
   };
   
+  const deleteCampaign = async (item) => {
 
+    try {
+      const response = await fetch(`http://localhost:5000/campaign/${item._id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        console.log(`Deleted item with ID: ${item._id}`);
+        window.location.reload();
+      } else {
+        // Handle errors
+        console.error(`Failed to delete item with ID: ${item._id}`);
+      }
+    } catch (error) {
+      console.error('Error deleting item:', error);
+    }
+  };
 
 
   return (
@@ -109,7 +127,7 @@ const MyCampaigns = () => {
                         <CButtonGroup role="group" aria-label="Basic mixed styles example">
                              <CButton color="info" onClick={() => showModel(item)} >
                             <CIcon icon={cilFolderOpen} size="md"/></CButton>
-                             <CButton color="danger"><CIcon icon={cilTrash} size="md"/></CButton>
+                             <CButton color="danger" onClick={() => deleteCampaign(item)}><CIcon icon={cilTrash} size="md"/></CButton>
                            
                         </CButtonGroup>
                         </CTableDataCell>
@@ -133,7 +151,7 @@ const MyCampaigns = () => {
       <CCol xs={12}>
   <CCard className="mb-4">
             <CCardHeader>
-             <div><strong>Keywords: </strong> {campaignData.campaignKeywords}</div>
+             <div><strong>Keywords: </strong> {campaignData.campaignKeywords} {" "}</div>
             </CCardHeader>
             
             <CCardBody>
@@ -162,33 +180,37 @@ const MyCampaigns = () => {
                          
                         </CTableDataCell>
                         <CTableDataCell>
-                          <div> <strong>{item['Influencer Name']}</strong></div>
-                          {/* <div className="small text-medium-emphasis">
-                            <span>{item.user.new ? 'New' : 'Recurring'}</span> | Registered:{' '}
-                            {item.user.registered}
-                          </div> */}
-                        </CTableDataCell>
-                        <CTableDataCell className="text-center">
-                        <div>{item['Social Media Platform']}</div>
-                        </CTableDataCell>
-                        <CTableDataCell>
-                          <div className="clearfix">
-                            <div className="float-start">
-                                 {item['Followers Count']}
-                            </div>
-                            <div className="float-end">
-                              {/* <small className="text-medium-emphasis">{item.usage.period}</small> */}
-                            </div>
+                        <div> <strong>{item['Influencer Name']}</strong></div>
+                        {/* <div className="small text-medium-emphasis">
+                          <span>{item.user.new ? 'New' : 'Recurring'}</span> | Registered:{' '}
+                          {item.user.registered}
+                        </div> */}
+                      </CTableDataCell>
+                      <CTableDataCell className="text-center">
+                      <div>{item['Social Media Platform']}</div>
+                      </CTableDataCell>
+                      <CTableDataCell className="text-center">
+                        {/* <div className="clearfix"> */}
+                          <div>
+                               {item['Followers Count']}
                           </div>
-                          {/* <CProgress thin color={item.usage.color} value={item.usage.value} /> */}
-                        </CTableDataCell>
-                        <CTableDataCell className="text-center">
-                        <div>{item['category']}</div>
-                        </CTableDataCell>
-                        <CTableDataCell>
-                          {/* <div className="small text-medium-emphasis">Last login</div> */}
-                         {item['review_score']}
-                        </CTableDataCell>
+                          {/* <div className="float-end"> */}
+                            {/* <small className="text-medium-emphasis">{item.usage.period}</small> */}
+                          {/* </div> */}
+                        {/* </div> */}
+                        {/* <CProgress thin color={blue} value={item['Followers Count']} /> */}
+                      </CTableDataCell>
+                      <CTableDataCell className="text-center">
+                      <div>{item['category']}</div>
+                      </CTableDataCell>
+                      <CTableDataCell className="text-center">
+                        {/* <div className="small text-medium-emphasis">Last login</div> */}
+                       {item['review_score']}
+                       
+                      </CTableDataCell>
+                      {/* <CTableDataCell className="text-center">
+                       {item['hash_tags']}
+                      </CTableDataCell> */}
                       </CTableRow>
                     ))}
                   </CTableBody>
