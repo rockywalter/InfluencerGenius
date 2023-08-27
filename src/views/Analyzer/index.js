@@ -1,7 +1,7 @@
 import { CForm, CTableHead, CTableRow, CTableHeaderCell, 
   CButton,CCard,CCardBody,CCardHeader,CCol,CFormSelect,
   CTableBody,CTableDataCell,CAvatar,CTable, CModal,
-  CModalHeader, CModalTitle, CModalBody, CModalFooter,CFormInput} from '@coreui/react'
+  CModalHeader, CModalTitle, CModalBody, CModalFooter,CFormInput,CFormSwitch,CSpinner } from '@coreui/react'
   import { CChart } from '@coreui/react-chartjs'
   import CIcon from '@coreui/icons-react'
   import React, {useEffect,useState } from 'react';
@@ -48,8 +48,10 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
     const [open, setOpen] = React.useState(false);
     const [openError, setErrorOpen] = React.useState(false);
-
- 
+    const [isChecked, setIsChecked] = useState(false);
+    const sentences = ['Counting Category Posts...', 'Calculating Review Score...', 'Matching Keywords...'];
+    const [currentSentenceIndex, setCurrentSentenceIndex] = useState(0);
+    const [displaying, setDisplaying] = useState(false);
 
 
     const handleClose = (event, reason) => {
@@ -100,11 +102,27 @@ const Alert = React.forwardRef(function Alert(props, ref) {
         console.log("Updated influencers:", influencers);
       }, [influencers]);
 
+      useEffect(() => {
+        let interval;
+    
+        if (displaying) {
+          interval = setInterval(() => {
+            setCurrentSentenceIndex((prevIndex) => (prevIndex + 1) % sentences.length);
+          }, 1500); // Change the interval time (in milliseconds) as needed
+        } else {
+          clearInterval(interval);
+        }
+    
+        return () => clearInterval(interval);
+      }, [displaying]);
+    
+
       const [isLoading, setIsLoading] = useState(false);
       const [isShowingResults, setIsShowingResults] = useState(false);
 
-      const handleSubmit = (e) => {
+      const handleSubmit = async (e) => {
         e.preventDefault();
+        setDisplaying(!displaying)
         setIsShowingResults(false)
         setIsLoading(true);     
         console.log(category)
@@ -114,8 +132,17 @@ const Alert = React.forwardRef(function Alert(props, ref) {
           "hash_tags":keywords,
           "category":category
         };
+         
+        let requestURL = '';
+
+        if (isChecked) {
+          requestURL = 'http://127.0.0.1:5000/influencerwithoutfollowers';
+        } else {
+          requestURL = 'http://127.0.0.1:5000/influencer';
+        } 
+
         
-        fetch('http://127.0.0.1:5000/influencer', {
+        await fetch(requestURL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -132,17 +159,15 @@ const Alert = React.forwardRef(function Alert(props, ref) {
           setInfluencerNames(names);
           const followers = data.map(item => item["Followers Count"]);
           setInfluencerFollowers(followers);
-
-  
-
-         
             setIsLoading(false);
+            setDisplaying(false)
           })
           .catch(error => {
             console.error('Error fetching data:', error);
             setIsLoading(false);
             setIsShowingResults(false)
             setErrorOpen(true)
+            setDisplaying(false)
           });
  
 
@@ -224,7 +249,8 @@ const Alert = React.forwardRef(function Alert(props, ref) {
                      <em>press enter to add new tag</em>
       </div>                                 
                   </div>
-
+                  <CFormSwitch label="Disable Follower Count Sorting" id="formSwitchCheckDefault" onChange={(event) => setIsChecked(event.target.checked)}/>
+                  {/* <CFormCheck id="flexCheckDefault" label="Don't sort by follower count"  onChange={(event) => setIsChecked(event.target.checked)}/> */}
                   <div className="d-grid gap-2 col-3 mx-auto">
                     <CButton color="success" type='submit'>Analyze <CIcon icon={cilSearch} size="md"/></CButton>
                   </div>
@@ -245,6 +271,12 @@ const Alert = React.forwardRef(function Alert(props, ref) {
      
   
   <br/>
+
+  
+         { displaying &&  <div className="text-center"><h5>{sentences[currentSentenceIndex]}</h5> <CSpinner color="primary" /></div> }
+            
+
+
 
   {isShowingResults && (
 
