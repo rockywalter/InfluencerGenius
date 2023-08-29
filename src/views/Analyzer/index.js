@@ -341,7 +341,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
                       </CTableDataCell>
                       <CTableDataCell className="text-center">
                         {/* <div className="small text-medium-emphasis">Last login</div> */}
-                       {item['review_score']}
+                       {item['review_score'].toFixed(2)}
                        
                       </CTableDataCell>
                       <CTableDataCell className="text-center">
